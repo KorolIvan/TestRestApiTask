@@ -10,3 +10,8 @@ Feature: Getting currency data for past date
     Given I perform to GET method for "/api/2022-01-12" currency rates
     When I sending request to get currency rates
     Then the date is equals to today date
+
+  Scenario: Verify that API for Specific date Foreign Exchange rates has SUCCESS status
+    Given I perform to GET method for "/api/2010-01-12" currency rates
+    Given I sending request to get currency rates
+    Then status is equals 200

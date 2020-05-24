@@ -4,4 +4,4 @@ Feature: Is there clear exceptions present
   Scenario: Bad endpoint path returns 400 Bad Request status
     Given I perform to GET method for "/api" currency rates
     When I sending request to get currency rates
-    Then status is equals Bad Request
+    Then status is equals 400

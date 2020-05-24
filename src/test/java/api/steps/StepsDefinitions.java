@@ -31,15 +31,9 @@ public class StepsDefinitions extends BasicStepsDefinition {
         response = request.when().get();
     }
 
-    @Then("^status is equals SUCCESS$")
-    public void verifyThatStatusCodeEquals200OK() {
-        response.then().spec(ApiLatestCurrencySpec.responseStatus);
-    }
-
-
-    @Then("^status is equals Bad Request$")
-    public void verifyThatUserReceiveBadRequestStatus() {
-        response.then().spec(BadRequestSpec.responseStatus);
+    @Then("^status is equals (\\d+)$")
+    public void verifyThatStatusCodeEquals200OK(int statusCode) {
+        response.then().assertThat().statusCode(statusCode);
     }
 
     @Then("^data collecting took less than (\\d+) seconds$")

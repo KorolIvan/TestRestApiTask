@@ -4,7 +4,7 @@ Feature: Is it latest currency present?
   Scenario: Latest endpoint return status SUCCESS
     Given I perform to GET method for "/api/latest" currency rates
     When I sending request to get currency rates
-    Then status is equals SUCCESS
+    Then status is equals 200
 
   Scenario: Latest currency rate collecting took less than 5 sec
     Given I perform to GET method for "/api/latest" currency rates
