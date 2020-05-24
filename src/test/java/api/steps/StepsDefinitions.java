@@ -3,9 +3,11 @@ package api.steps;
 
 import api.model.BaseCurrency;
 import api.specification.ApiLatestCurrencySpec;
+import api.specification.BadRequestSpec;
 import api.utils.DateUtil;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -21,19 +23,24 @@ public class StepsDefinitions extends BasicStepsDefinition {
 
     @Given("^I perform to GET method for \"(.+)\" currency rates$")
     public void performGetLatestCurrencyRates(String endpoint) {
-//        request = given().spec(ApiLatestCurrencySpec.requestSpecification);
         request = given().spec(getLatestCurrencySpec().getPathEndpoint(endpoint));
     }
 
 
-    @When("^I sending request to get latest currency rates$")
-    public void sendRequestToGetUpToDateCurrencyRate() {
+    @When("^I sending request to get currency rates$")
+    public void sendRequestToGetCurrencyRate() {
         response = request.when().get();
     }
 
     @Then("^status is equals SUCCESS$")
     public void verifyThatStatusCodeEquals200OK() {
         response.then().spec(ApiLatestCurrencySpec.responseStatus);
+    }
+
+
+    @Then("^status is equals Bad Request$")
+    public void verifyThatUserReceiveBadRequestStatus() {
+        response.then().spec(BadRequestSpec.responseStatus);
     }
 
     @Then("^data collecting took less than (\\d+) seconds$")
@@ -44,12 +51,21 @@ public class StepsDefinitions extends BasicStepsDefinition {
 
     @Then("^the date is equals to today date$")
     public void verifyThatResponseDateIsEqualsToTodayDate() {
-        BaseCurrency currency = response
+        Assert.assertEquals(DateUtil.getTodayDate(),
+                getBaseCurencyEntityFromResponce().getDate());
+    }
+
+    @Then("^the date is equals to \"([^\"]*)\" date$")
+    public void theDateIsEqualsToDate(String expectedDate) {
+        Assert.assertEquals(expectedDate,
+                getBaseCurencyEntityFromResponce().getDate());
+    }
+
+    private BaseCurrency getBaseCurencyEntityFromResponce() {
+        return response
                 .then()
                 .extract()
                 .body()
                 .as(BaseCurrency.class);
-        Assert.assertEquals(DateUtil.getTodayDate(), currency.getDate());
     }
-
 }
