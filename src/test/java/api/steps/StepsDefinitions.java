@@ -1,24 +1,28 @@
 package api.steps;
 
 
+import api.model.BaseCurrency;
 import api.specification.ApiLatestCurrencySpec;
+import api.utils.DateUtil;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
 
 import static com.jayway.restassured.RestAssured.*;
 
-public class StepsDefinitions {
+public class StepsDefinitions extends BasicStepsDefinition {
 
     private Response response;
     private RequestSpecification request;
 
 
-    @Given("^I perform to GET method for latest currency rates$")
-    public void performGetLatestCurrencyRates() {
-        request = given().spec(ApiLatestCurrencySpec.requestSpecification);
+    @Given("^I perform to GET method for \"(.+)\" currency rates$")
+    public void performGetLatestCurrencyRates(String endpoint) {
+//        request = given().spec(ApiLatestCurrencySpec.requestSpecification);
+        request = given().spec(getLatestCurrencySpec().getPathEndpoint(endpoint));
     }
 
 
@@ -28,7 +32,7 @@ public class StepsDefinitions {
     }
 
     @Then("^status is equals SUCCESS$")
-    public void verifyThatStatusCodeEquals200OK() throws Exception {
+    public void verifyThatStatusCodeEquals200OK() {
         response.then().spec(ApiLatestCurrencySpec.responseStatus);
     }
 
@@ -39,8 +43,13 @@ public class StepsDefinitions {
     }
 
     @Then("^the date is equals to today date$")
-    public void verifyThatResponceDateIsEqualsToTodayDate() {
-
+    public void verifyThatResponseDateIsEqualsToTodayDate() {
+        BaseCurrency currency = response
+                .then()
+                .extract()
+                .body()
+                .as(BaseCurrency.class);
+        Assert.assertEquals(DateUtil.getTodayDate(), currency.getDate());
     }
 
 }

@@ -3,21 +3,20 @@ package api.specification;
 import api.utils.DateUtil;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.builder.ResponseSpecBuilder;
-import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.jayway.restassured.specification.ResponseSpecification;
-import api.utils.RequestDatas;
 
 import static org.hamcrest.Matchers.lessThan;
 
-public class ApiLatestCurrencySpec {
+public class ApiLatestCurrencySpec extends AbstractBaseApiSpecification {
 
-    public static RequestSpecification requestSpecification =
-            new RequestSpecBuilder()
-                    .setBaseUri(RequestDatas.BASE_URL)
-                    .setContentType(ContentType.JSON)
-                    .setBasePath("/api/latest")
-                    .build();
+//    private static final String LATEST_BASE_PATH = "/api/latest";
+//    private static final String WRONG_PATH = "/api";
+
+//    public static RequestSpecification requestSpecification =
+//            new RequestSpecBuilder()
+//                    .setBasePath("/api/latest")
+//                    .build();
 
     public static ResponseSpecification responseStatus =
             new ResponseSpecBuilder()
@@ -30,4 +29,10 @@ public class ApiLatestCurrencySpec {
                 .build();
     }
 
+//    @Override
+//    public RequestSpecification getPathEndpoint() {
+//        return getBaseUrl()
+//                .setBasePath(LATEST_BASE_PATH)
+//                .build();
+//    }
 }
