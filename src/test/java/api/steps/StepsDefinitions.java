@@ -7,7 +7,6 @@ import api.specification.BadRequestSpec;
 import api.utils.DateUtil;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -17,7 +16,7 @@ import static com.jayway.restassured.RestAssured.*;
 
 public class StepsDefinitions extends BasicStepsDefinition {
 
-    private Response response;
+    private static Response response;
     private RequestSpecification request;
 
 
@@ -52,16 +51,16 @@ public class StepsDefinitions extends BasicStepsDefinition {
     @Then("^the date is equals to today date$")
     public void verifyThatResponseDateIsEqualsToTodayDate() {
         Assert.assertEquals(DateUtil.getTodayDate(),
-                getBaseCurencyEntityFromResponce().getDate());
+                getBaseCurrencyEntityFromResponse().getDate());
     }
 
     @Then("^the date is equals to \"([^\"]*)\" date$")
     public void theDateIsEqualsToDate(String expectedDate) {
         Assert.assertEquals(expectedDate,
-                getBaseCurencyEntityFromResponce().getDate());
+                getBaseCurrencyEntityFromResponse().getDate());
     }
 
-    private BaseCurrency getBaseCurencyEntityFromResponce() {
+    private static BaseCurrency getBaseCurrencyEntityFromResponse() {
         return response
                 .then()
                 .extract()
