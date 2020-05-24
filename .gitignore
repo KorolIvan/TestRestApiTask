@@ -2,4 +2,5 @@
 
 target
 .idea
+.allure
 TestRestApiTask.iml
