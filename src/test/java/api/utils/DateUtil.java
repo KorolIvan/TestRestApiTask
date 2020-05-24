@@ -6,11 +6,6 @@ import java.time.LocalDate;
 
 public class DateUtil {
 
-    public static void main(String[] args) {
-        System.out.println(getTodayDate());
-        System.out.println(secondsToMilliseconds(5));
-    }
-
     public static String getTodayDate() {
         if (checkIfTodayIsWeekendDay()
                 && LocalDate.now().getDayOfWeek().equals(DayOfWeek.SATURDAY)) {

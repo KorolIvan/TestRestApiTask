@@ -2,10 +2,8 @@ package api.steps;
 
 
 import api.model.BaseCurrency;
-import api.specification.ApiLatestCurrencySpec;
-import api.specification.BadRequestSpec;
+import api.specification.AbstractBaseApiSpecification;
 import api.utils.DateUtil;
-import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -16,13 +14,12 @@ import static com.jayway.restassured.RestAssured.*;
 
 public class StepsDefinitions extends BasicStepsDefinition {
 
-    private static Response response;
     private RequestSpecification request;
 
 
     @Given("^I perform to GET method for \"(.+)\" currency rates$")
     public void performGetLatestCurrencyRates(String endpoint) {
-        request = given().spec(getLatestCurrencySpec().getPathEndpoint(endpoint));
+        request = given().spec(AbstractBaseApiSpecification.getPathEndpoint(endpoint));
     }
 
 
@@ -34,12 +31,6 @@ public class StepsDefinitions extends BasicStepsDefinition {
     @Then("^status is equals (\\d+)$")
     public void verifyThatStatusCodeEquals200OK(int statusCode) {
         response.then().assertThat().statusCode(statusCode);
-    }
-
-    @Then("^data collecting took less than (\\d+) seconds$")
-    public void verifyThatDataCollectingTookLessThan(int seconds) {
-        response.then()
-                .spec(ApiLatestCurrencySpec.getResponseWithExpectedTime(seconds));
     }
 
     @Then("^the date is equals to today date$")

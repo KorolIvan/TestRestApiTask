@@ -7,13 +7,13 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class AbstractBaseApiSpecification {
 
-    public RequestSpecBuilder getBaseUrl() {
+    private static RequestSpecBuilder getBaseUrl() {
         return new RequestSpecBuilder()
                 .setBaseUri(RequestDatas.BASE_URL)
                 .setContentType(ContentType.JSON);
     }
 
-    public RequestSpecification getPathEndpoint(String path) {
+    public static RequestSpecification getPathEndpoint(String path) {
         return getBaseUrl().setBasePath(path).build();
     }
 

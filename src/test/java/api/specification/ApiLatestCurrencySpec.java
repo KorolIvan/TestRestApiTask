@@ -8,11 +8,6 @@ import static org.hamcrest.Matchers.lessThan;
 
 public class ApiLatestCurrencySpec extends AbstractBaseApiSpecification {
 
-    public static ResponseSpecification responseStatus =
-            new ResponseSpecBuilder()
-                    .expectStatusCode(200)
-                    .build();
-
     public static ResponseSpecification getResponseWithExpectedTime(int seconds) {
         return new ResponseSpecBuilder()
                 .expectResponseTime(lessThan((DateUtil.secondsToMilliseconds(seconds))))
