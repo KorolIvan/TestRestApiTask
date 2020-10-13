@@ -66,7 +66,7 @@
     <properties>
         <cucumber.version>4.3.0</cucumber.version>
         <rest.assured.version>2.9.0</rest.assured.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <lombok.version>1.18.12</lombok.version>
         <aspectj.version>1.8.10</aspectj.version>
     </properties>
